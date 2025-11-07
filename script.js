@@ -334,9 +334,9 @@ function addInvitedFriend(){
   updateFriendsCounter();
   updateMissionButtons();
 
-  addPoints(5000);
+  addPoints(0.01);
   idInput.value = '';
-  setText('check-status', 'Приглашение засчитано! (+5 000)');
+  setText('check-status', 'Приглашение засчитано! (+0.01)');
 }
 function renderInvitedList(){
   const ul = document.getElementById('invited-list');
