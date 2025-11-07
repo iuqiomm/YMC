@@ -4,7 +4,7 @@
 const CHANNEL_URL = 'https://t.me/YMCclub'; // <--- ЗАМЕНИТЕ
 
 // 2) БАЗА ДЛЯ РЕФ-ССЫЛКИ ПРИГЛАШЕНИЙ (deep-link вашего бота)
-const INVITE_BASE = 'https://t.me/ymctapbot'; // <--- ЗАМЕНИТЕ
+const INVITE_BASE = 'https://t.me/ymctapbot?startapp'; // <--- ЗАМЕНИТЕ
 
 // ===== Новые константы для "добычи" =====
 
