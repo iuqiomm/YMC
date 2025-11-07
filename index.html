@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Xancoin Tap</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <!-- ШАПКА -->
+  <header id="top-bar">
+    <div id="tg-username"></div>
+    <div id="game-title">YCM</div>
+    <div id="player-id"></div>
+  </header>
+
+  <!-- СЧЁТ СПРАВА СВЕРХУ -->
+  <div id="score-top">
+    <img id="coin-icon" src="foto/sticker.jpg" alt="Xancoin" class="coin-icon"/>
+    <span id="score-value">0</span>
+  </div>
+
+  <!-- ЭКРАНЫ -->
+  <main id="screens">
+    <!-- GAME -->
+    <section id="screen-game" class="tab-content active" data-tab="game" aria-labelledby="tab-game">
+      <div class="card gap-lg">
+        <!-- (по просьбе) заголовок убран -->
+        <div id="battle-area">
+          <div id="coin" class="coin" onclick="tapCoin()" aria-label="Тапать монету"></div>
+          <div id="plus-one" class="plus-one">+1</div>
+          <!-- Частицы добавляются скриптом в этот же блок -->
+        </div>
+        <div id="tap-health" class="chip">hp: 5000</div>
+      </div>
+    </section>
+
+    <!-- MISSIONS -->
+    <section id="screen-missions" class="tab-content" data-tab="missions" aria-labelledby="tab-missions">
+      <div class="section">
+        <h2 class="section-title">Mission</h2>
+
+        <div class="card">
+          <h3 class="card-title">Подписаться на канал</h3>
+          <p class="card-text">Подпишитесь на наш Telegram-канал и получите <b>0.2</b> монет.</p>
+          <!-- ВСТАВЬТЕ ВАШУ ССЫЛКУ НА КАНАЛ В script.js → CHANNEL_URL -->
+          <div class="actions">
+            <a id="channel-link" class="btn btn-primary" href="#" target="_blank" rel="noopener" onclick="subscribeToChannel(event)">Перейти к каналу</a>
+            <button class="btn btn-claim" id="claim-subscribe" onclick="claimSubscribeMission()">Забрать награду</button>
+          </div>
+          <p id="mission-subscribe-status" class="status-line"></p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card">
+          <h3 class="card-title">Пригласить 1 друга</h3>
+          <p class="card-text">Пригласите <b>1</b> друга и получите <b>0.01</b> монет.</p>
+          <p id="mission-invite1-progress" class="progress-line">Прогресс: 0/1</p>
+          <div class="actions">
+            <button class="btn btn-claim" id="claim-invite1" onclick="claimInvite1Mission()">Забрать награду</button>
+          </div>
+          <p id="mission-invite1-status" class="status-line"></p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card">
+          <h3 class="card-title">Пригласить 10 друзей</h3>
+          <p class="card-text">Пригласите <b>10</b> друзей и получите <b>0.5</b> монет.</p>
+          <p id="mission-invite10-progress" class="progress-line">Прогресс: 0/10</p>
+          <div class="actions">
+            <button class="btn btn-claim" id="claim-invite10" onclick="claimInvite10Mission()">Забрать награду</button>
+          </div>
+          <p id="mission-invite10-status" class="status-line"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FRIENDS -->
+    <section id="screen-friends" class="tab-content" data-tab="friends" aria-labelledby="tab-friends">
+      <div class="section">
+        <h2 class="section-title">Друзья</h2>
+
+        <div class="card">
+          <div class="stack">
+            <div id="friends-counter" class="chip chip-strong">Приглашено друзей: 0</div>
+            <!-- ВСТАВЬТЕ СВОЮ РЕФ-ССЫЛКУ НА БОТА В script.js → INVITE_BASE -->
+            <button class="btn btn-primary" onclick="copyInviteLink()">Скопировать реф-ссылку</button>
+            <p id="invite-copy-status" class="status-line"></p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card">
+          <h3 class="card-title">Засчитать приглашение</h3>
+          <p class="card-text">Введите ID приглашённого (7 цифр), чтобы засчитать приглашение.</p>
+          <div class="row">
+            <input type="text" id="friend-id-input" placeholder="ID друга (7 цифр)" inputmode="numeric" maxlength="7"/>
+            <button class="btn btn-secondary" onclick="addInvitedFriend()">Добавить</button>
+          </div>
+          <p id="check-status" class="status-line"></p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card">
+          <h3 class="card-title">Список приглашённых</h3>
+          <ul id="invited-list" class="invited-list"><!-- динамически --></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- AIRDROP -->
+    <section id="screen-airdrop" class="tab-content" data-tab="airdrop" aria-labelledby="tab-airdrop">
+      <div class="section">
+        <h2 class="section-title">Airdrop</h2>
+        <div class="card center">
+          <p class="soon">Скоро</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- НИЖНЕЕ МЕНЮ -->
+  <nav id="bottom-nav" class="menu">
+    <button id="tab-game" class="tab active" onclick="openTab('game')">Game</button>
+    <button id="tab-missions" class="tab" onclick="openTab('missions')">Задания</button>
+    <button id="tab-friends" class="tab" onclick="openTab('friends')">Друзья</button>
+    <button id="tab-airdrop" class="tab" onclick="openTab('airdrop')">Airdrop</button>
+  </nav>
+</body>
+</html>
